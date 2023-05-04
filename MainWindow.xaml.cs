@@ -25,7 +25,11 @@ namespace TestingTranslate
             InitializeComponent();
         }
 
-
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            WordsDictionary.SaveData();
+        }
         private void UKR_RB_Checked(object sender, RoutedEventArgs e)
         {
             WordsBox.ItemsSource = WordsDictionary.storage.Select(x => x.ukr);

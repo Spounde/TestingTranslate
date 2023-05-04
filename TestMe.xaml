@@ -5,13 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestingTranslate"
         mc:Ignorable="d"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
         Title="TestMe" Height="500" Width="1000">
     <Grid>
         <TextBox x:Name="InputTextBox" HorizontalAlignment="Center" Margin="0,234,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="326" Height="53"/>
         <ListBox x:Name="WordsBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="270,85,270,352"/>
-        <Button x:Name="Repeat" Content="Repeat" Margin="793,10,10,425" Click="RepeatButton_Click"/>
-        <Button x:Name="Confirm" Content="Confirm" Margin="401,158,401,272" Click="ConfirmButton_Click"/>
-        <Button x:Name="ReturnButton" Content="Return" Margin="0,430,785,0" Click="ReturnButton_Click"/>
+        <Button x:Name="CloseButton" Content="X" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="970,10,0,0" Width="20" Height="20" Click="CloseButton_Click"/>
+        <Button x:Name="Repeat" Content="Repeat" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="401,15,0,0" Click="RepeatButton_Click" Height="38" Width="203"/>
+        <Button x:Name="Confirm" Content="Confirm" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="446,168,0,0" Click="ConfirmButton_Click" Height="48" Width="113"/>
+        <Button x:Name="ReturnButton" Content="Return"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,426,0,0" Click="ReturnButton_Click" Height="64" Width="124"/>
 
     </Grid>
 </Window>

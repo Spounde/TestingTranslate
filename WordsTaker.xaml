@@ -5,15 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestingTranslate"
         mc:Ignorable="d"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
         Title="WordsTaker" Height="500" Width="1000">
     <Grid>
-        <ListBox x:Name="UKRWords" HorizontalAlignment="Left" Height="148" Margin="211,86,0,0" VerticalAlignment="Top" Width="162" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-        <ListBox x:Name="ENGWords" HorizontalAlignment="Left" Height="148" Margin="621,86,0,0" VerticalAlignment="Top" Width="164" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-        <Button x:Name="AddWordToDictionary" Content="Add" Height="NaN" Margin="385,308,385,120" Width="NaN" Click="AddWordToDictionary_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="485*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="13*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="UKRWords"  HorizontalAlignment="Left" Height="148" Margin="211,86,0,0" VerticalAlignment="Top" Width="162" SelectionChanged="UKRWords_SelectionChanged" />
+        <ListBox x:Name="ENGWords"  HorizontalAlignment="Left" Height="148" Margin="621,86,0,0" VerticalAlignment="Top" Width="164" SelectionChanged="UKRWords_SelectionChanged"/>
         <TextBox x:Name="InputUKR" HorizontalAlignment="Left" Height="24" Margin="211,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
         <TextBox x:Name="InputENG" HorizontalAlignment="Left" Height="24" Margin="621,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
-        <Button x:Name="ReturnButton" Content="Return" Margin="0,409,785,21" Click="ReturnButton_Click"/>
-        <Button x:Name="DeleteWordFromDictionary" Content="Delete" Height="NaN" Margin="420,60,420,348" Width="NaN" Click="DeleteWordFromDictionary_Click"/>
-
+        <Button x:Name="CloseButton" Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" Width="20" Height="20" Click="CloseButton_Click"/>
+        <Button x:Name="AddWordToDictionary" Content="Add" HorizontalAlignment="Left" Height="51" Margin="396,290,0,0" VerticalAlignment="Top" Width="208" Click="AddWordToDictionary_Click"/>
+        <Button x:Name="CancelSelectionButton" Content="Cancel Selection" HorizontalAlignment="Left" Margin="420,138,0,0" VerticalAlignment="Top"  Click="CancelSelectionButton_Click" Height="35" Width="160"/>
+        <Button x:Name="ReturnButton" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Return" Margin="10,415,0,0" Click="ReturnButton_Click" Height="75" Width="146"/>
+        <Button x:Name="DeleteWordFromDictionary" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Delete" Margin="447,43,0,0" Click="DeleteWordFromDictionary_Click" Height="55" Width="106"/>
+        <Button x:Name="ApplyChangeButton" Content="Apply Change" HorizontalAlignment="Left" Margin="420,199,0,0" VerticalAlignment="Top"  Click="UpdateWord_Click" Height="35" Width="160"/>
     </Grid>
 </Window>
+

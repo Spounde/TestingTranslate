@@ -39,7 +39,12 @@ namespace TestingTranslate
             this.Close();
         }
 
-        
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            WordsDictionary.SaveData();
+        }
+
         private Random random = new Random();
 
         private void ShowRandomWord()

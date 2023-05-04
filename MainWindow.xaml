@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestingTranslate"
         mc:Ignorable="d"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="500" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -13,10 +15,12 @@
         </Grid.ColumnDefinitions>
         <RadioButton x:Name="UKR_RB" Content="UKR" HorizontalAlignment="Left" Margin="549,202,0,0" VerticalAlignment="Top" Checked="UKR_RB_Checked" Grid.Column="1" />
         <RadioButton x:Name="ENG_RB" Content="ENG" HorizontalAlignment="Left" Margin="549,249,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.526,2.676" Checked="ENG_RB_Checked" Grid.Column="1"/>
+        <Button x:Name="CloseButton" Content="X" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="954,10,0,0" Width="20" Height="20" Click="CloseButton_Click" Grid.Column="1"/>
         <Button x:Name="IncreasWords" Content="Increase words" HorizontalAlignment="Left" Margin="3,380,0,0" VerticalAlignment="Top" Click="IncreasWords_Click" Grid.Column="1" Width="164" Height="39"/>
+        <Button x:Name="TestMe_Button" Content="TestMe" HorizontalAlignment="Left" Margin="3,424,0,0" VerticalAlignment="Top" Click="TestMe_Click" Grid.Column="1" Width="164" Height="39"/>
         <ListBox x:Name="WordsBox" HorizontalAlignment="Left" Height="265" Margin="124,82,0,0" VerticalAlignment="Top" Width="366" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="1"/>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="2">
-            <Button x:Name="Test" Content="Test me" HorizontalAlignment="Left" Margin="725,0,0,0" VerticalAlignment="Center" Click="TestMe_Click" Grid.Column="1" Width="160" Height="39"/>
-        </Border>
+
+
+
     </Grid>
 </Window>
