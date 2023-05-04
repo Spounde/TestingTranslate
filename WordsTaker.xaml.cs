@@ -25,24 +25,24 @@ namespace TestingTranslate
             ShowWords();
         }
 
-        
+
 
         private void UKRWords_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             if (sender == UKRWords)
             {
-                var selectedWord = UKRWords.SelectedItem as string;
+                var selectedWord = UKRWords.SelectedItems.OfType<string>().FirstOrDefault();
                 InputUKR.Text = selectedWord;
                 InputENG.Text = WordsDictionary.storage.FirstOrDefault(x => x.ukr == selectedWord)?.eng;
             }
             else if (sender == ENGWords)
             {
-                var selectedWord = ENGWords.SelectedItem as string;
+                var selectedWord = ENGWords.SelectedItems.OfType<string>().FirstOrDefault();
                 InputENG.Text = selectedWord;
                 InputUKR.Text = WordsDictionary.storage.FirstOrDefault(x => x.eng == selectedWord)?.ukr;
             }
         }
+
 
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -62,66 +62,68 @@ namespace TestingTranslate
         {
             var selectedWord = UKRWords.SelectedItem as string;
 
-            
+            // Проверяем, что оба поля заполнены
+            var ukr = InputUKR.Text.Trim();
+            var eng = InputENG.Text.Trim();
+            if (string.IsNullOrWhiteSpace(ukr) || string.IsNullOrWhiteSpace(eng))
+            {
+                MessageBox.Show("Both Ukrainian and English words must be filled in.");
+                return;
+            }
+
+            // Проверяем, что такого слова еще нет
+            if (WordsDictionary.storage.Any(x => x.ukr == ukr || x.eng == eng))
+            {
+                MessageBox.Show("This word already exists in the dictionary.");
+                return;
+            }
+
+            // Обновляем слово в списке, где оно выбрано
             var wordToUpdate = WordsDictionary.storage.FirstOrDefault(x => x.ukr == selectedWord || x.eng == selectedWord);
             if (wordToUpdate != null)
             {
-                var ukr = InputUKR.Text.Trim();
-                var eng = InputENG.Text.Trim();
-
-                if (!string.IsNullOrWhiteSpace(ukr) && !string.IsNullOrWhiteSpace(eng))
-                {
-                    wordToUpdate.ukr = ukr;
-                    wordToUpdate.eng = eng;
-
-                    WordsDictionary.SaveData();
-                    ShowWords();
-                }
-                else
-                {
-                    MessageBox.Show("Both Ukrainian and English words must be filled in.");
-                }
+                wordToUpdate.ukr = ukr;
+                wordToUpdate.eng = eng;
             }
 
-           
-            var wordToUpdateInOtherList = WordsDictionary.storage.FirstOrDefault(x => x.ukr == InputUKR.Text.Trim() || x.eng == InputENG.Text.Trim());
+            // Обновляем слово в другом списке, если оно есть там тоже
+            var wordToUpdateInOtherList = WordsDictionary.storage.FirstOrDefault(x => x.ukr == ukr || x.eng == eng);
             if (wordToUpdateInOtherList != null && wordToUpdateInOtherList != wordToUpdate)
             {
-                var ukr = InputUKR.Text.Trim();
-                var eng = InputENG.Text.Trim();
-
-                if (!string.IsNullOrWhiteSpace(ukr) && !string.IsNullOrWhiteSpace(eng))
-                {
-                    wordToUpdateInOtherList.ukr = ukr;
-                    wordToUpdateInOtherList.eng = eng;
-
-                    WordsDictionary.SaveData();
-                    ShowWords();
-                }
-                else
-                {
-                    MessageBox.Show("Both Ukrainian and English words must be filled in.");
-                }
+                wordToUpdateInOtherList.ukr = ukr;
+                wordToUpdateInOtherList.eng = eng;
             }
+
+            WordsDictionary.SaveData();
+            ShowWords();
         }
+
 
 
 
         private void AddWordToDictionary_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(InputUKR.Text) || string.IsNullOrWhiteSpace(InputENG.Text) ||
-               InputUKR.Text.Trim().Length == 0 || InputENG.Text.Trim().Length == 0)
+            var ukr = InputUKR.Text.Trim();
+            var eng = InputENG.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(ukr) || string.IsNullOrWhiteSpace(eng))
             {
                 MessageBox.Show("Both fields are required.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            else if (WordsDictionary.storage.Any(x => x.ukr == ukr || x.eng == eng))
+            {
+                MessageBox.Show("Word already exists in dictionary.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             else
             {
-                WordsDictionary.Add(InputUKR.Text.Trim(), InputENG.Text.Trim());
+                WordsDictionary.Add(ukr, eng);
                 ShowWords();
+                WordsDictionary.SaveData();
                 InputENG.Clear();
                 InputUKR.Clear();
             }
         }
+
         private void ShowWords()
         {
             UKRWords.ItemsSource = WordsDictionary.storage.Select(x => x.ukr);
