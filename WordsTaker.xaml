@@ -1,0 +1,19 @@
+﻿<Window x:Class="TestingTranslate.WordsTaker"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestingTranslate"
+        mc:Ignorable="d"
+        Title="WordsTaker" Height="500" Width="1000">
+    <Grid>
+        <ListBox x:Name="UKRWords" HorizontalAlignment="Left" Height="148" Margin="211,86,0,0" VerticalAlignment="Top" Width="162" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+        <ListBox x:Name="ENGWords" HorizontalAlignment="Left" Height="148" Margin="621,86,0,0" VerticalAlignment="Top" Width="164" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+        <Button x:Name="AddWordToDictionary" Content="Add" Height="NaN" Margin="385,308,385,120" Width="NaN" Click="AddWordToDictionary_Click"/>
+        <TextBox x:Name="InputUKR" HorizontalAlignment="Left" Height="24" Margin="211,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+        <TextBox x:Name="InputENG" HorizontalAlignment="Left" Height="24" Margin="621,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
+        <Button x:Name="ReturnButton" Content="Return" Margin="0,409,785,21" Click="ReturnButton_Click"/>
+        <Button x:Name="DeleteWordFromDictionary" Content="Delete" Height="NaN" Margin="420,60,420,348" Width="NaN" Click="DeleteWordFromDictionary_Click"/>
+
+    </Grid>
+</Window>

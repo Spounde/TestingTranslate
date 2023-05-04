@@ -1,0 +1,17 @@
+﻿<Window x:Class="TestingTranslate.TestMe"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestingTranslate"
+        mc:Ignorable="d"
+        Title="TestMe" Height="500" Width="1000">
+    <Grid>
+        <TextBox x:Name="InputTextBox" HorizontalAlignment="Center" Margin="0,234,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="326" Height="53"/>
+        <ListBox x:Name="WordsBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="270,85,270,352"/>
+        <Button x:Name="Repeat" Content="Repeat" Margin="793,10,10,425" Click="RepeatButton_Click"/>
+        <Button x:Name="Confirm" Content="Confirm" Margin="401,158,401,272" Click="ConfirmButton_Click"/>
+        <Button x:Name="ReturnButton" Content="Return" Margin="0,430,785,0" Click="ReturnButton_Click"/>
+
+    </Grid>
+</Window>
