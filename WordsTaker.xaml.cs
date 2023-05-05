@@ -14,9 +14,7 @@ using System.Windows.Shapes;
 
 namespace TestingTranslate
 {
-    /// <summary>
-    /// Interaction logic for WordsTaker.xaml
-    /// </summary>
+   
     public partial class WordsTaker : Window
     {
         public WordsTaker()
@@ -43,13 +41,7 @@ namespace TestingTranslate
             }
         }
 
-
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-            WordsDictionary.SaveData();
-        }
+     
 
         private void CancelSelectionButton_Click(object sender, RoutedEventArgs e)
         {
@@ -62,7 +54,7 @@ namespace TestingTranslate
         {
             var selectedWord = UKRWords.SelectedItem as string;
 
-            // Проверяем, что оба поля заполнены
+           
             var ukr = InputUKR.Text.Trim();
             var eng = InputENG.Text.Trim();
             if (string.IsNullOrWhiteSpace(ukr) || string.IsNullOrWhiteSpace(eng))
@@ -71,14 +63,14 @@ namespace TestingTranslate
                 return;
             }
 
-            // Проверяем, что такого слова еще нет
+            
             if (WordsDictionary.storage.Any(x => x.ukr == ukr || x.eng == eng))
             {
                 MessageBox.Show("This word already exists in the dictionary.");
                 return;
             }
 
-            // Обновляем слово в списке, где оно выбрано
+            
             var wordToUpdate = WordsDictionary.storage.FirstOrDefault(x => x.ukr == selectedWord || x.eng == selectedWord);
             if (wordToUpdate != null)
             {
@@ -99,7 +91,11 @@ namespace TestingTranslate
         }
 
 
-
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+            WordsDictionary.SaveData();
+        }
 
         private void AddWordToDictionary_Click(object sender, RoutedEventArgs e)
         {

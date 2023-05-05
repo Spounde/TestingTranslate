@@ -27,9 +27,7 @@ namespace TestingTranslate
 
         private void RepeatButton_Click(object sender, RoutedEventArgs e)
         {
-            TestMe t = new TestMe();
-            t.Show();
-            this.Close();
+            ShowRandomWord();
         }
 
         private void ReturnButton_Click(object sender, RoutedEventArgs e)
