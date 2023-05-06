@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        Title="WordsTaker" Height="500" Width="1000">
+        Title="WordsTaker" Height="600" Width="1100">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="485*"/>
@@ -20,10 +20,36 @@
         <TextBox x:Name="InputENG" HorizontalAlignment="Left" Height="24" Margin="621,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
         <Button x:Name="CloseButton" Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,5,0" Width="20" Height="20" Click="CloseButton_Click"/>
         <Button x:Name="AddWordToDictionary" Content="Add" HorizontalAlignment="Left" Height="51" Margin="396,290,0,0" VerticalAlignment="Top" Width="208" Click="AddWordToDictionary_Click"/>
-        <Button x:Name="CancelSelectionButton" Content="Cancel Selection" HorizontalAlignment="Left" Margin="420,138,0,0" VerticalAlignment="Top"  Click="CancelSelectionButton_Click" Height="35" Width="160"/>
-        <Button x:Name="ReturnButton" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Return" Margin="10,415,0,0" Click="ReturnButton_Click" Height="75" Width="146"/>
+        <Button x:Name="CancelSelectionButton" Content="Cancel Selection" HorizontalAlignment="Left" Margin="420,138,0,0" VerticalAlignment="Top"  Click="CancelSelectionButton_Click" Height="35" Width="160" Visibility="Collapsed"/>
+        <Button x:Name="ReturnButton" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Return" Margin="10,515,0,0" Click="ReturnButton_Click" Height="75" Width="146"/>
         <Button x:Name="DeleteWordFromDictionary" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Delete" Margin="447,43,0,0" Click="DeleteWordFromDictionary_Click" Height="55" Width="106"/>
-        <Button x:Name="ApplyChangeButton" Content="Apply Change" HorizontalAlignment="Left" Margin="420,199,0,0" VerticalAlignment="Top"  Click="UpdateWord_Click" Height="35" Width="160"/>
+        <Button x:Name="ApplyChangeButton" Content="Apply Change" HorizontalAlignment="Left" Margin="420,199,0,0" VerticalAlignment="Top"  Click="UpdateWord_Click" Height="35" Width="160" Visibility="Collapsed"/>
+        <TextBlock TextWrapping="Wrap" Text="UKR" Margin="279,7,665,467"/>
+        <TextBlock TextWrapping="Wrap" Text="Eng" Margin="690,7,254,467"/>
+        <TextBox x:Name="InputUKRSynonyms" HorizontalAlignment="Left" Height="24" Margin="211,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" />
+        <TextBox x:Name="InputENGSynonyms" HorizontalAlignment="Left" Height="24" Margin="621,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" />
+        <TextBlock TextWrapping="Wrap" Text="UKR Synonyms" Margin="253,306,716,260" RenderTransformOrigin="0.5,0.5" >
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="-0.409"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-0.839"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        <TextBlock TextWrapping="Wrap" Text="ENG Synonyms" Margin="661,303,306,259" />
+        <TextBlock Text="Search Ukrainian:" Margin="93,58,881,506"/>
+        <TextBox x:Name="SearchUKR" TextChanged="SearchUKR_TextChanged" Margin="83,86,871,474"/>
+        <TextBlock Text="Search English:" Margin="827,58,141,514"/>
+        <TextBox x:Name="SearchENG" TextChanged="SearchENG_TextChanged" Margin="813,86,141,474"/>
+        <TextBox x:Name="InputAlternateUKR" HorizontalAlignment="Left" Height="24" Margin="34,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
+        <TextBox x:Name="InputAlternateENG" HorizontalAlignment="Left" Height="24" Margin="813,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
+        <TextBlock TextWrapping="Wrap" Text="UKR Alternate Translate" Margin="68,306,871,269" />
+        <TextBlock TextWrapping="Wrap" Text="ENG Alternate Translate" Margin="831,306,108,269" />
+
+
+
     </Grid>
 </Window>
 

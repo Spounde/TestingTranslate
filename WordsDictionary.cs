@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace TestingTranslate
 {
@@ -13,9 +14,17 @@ namespace TestingTranslate
     {
         public static List<Word> storage = LoadData();
 
-        public static void Add(string ukr, string eng)
+        public static void Add(string ukr, string eng, List<string> synonyms = null, List<string> homonyms = null)
         {
-            storage.Add(new Word(ukr, eng));
+            var word = new Word(ukr, eng, synonyms, homonyms);
+
+            if (!word.IsUnique(storage))
+            {
+                MessageBox.Show("This word already exists in the dictionary.");
+                return;
+            }
+
+            storage.Add(word);
             SaveData();
         }
 
@@ -29,7 +38,6 @@ namespace TestingTranslate
             string jsonString = JsonSerializer.Serialize(storage);
             File.WriteAllText("storage.json", jsonString);
         }
-
 
         static List<Word> LoadData()
         {
@@ -48,7 +56,5 @@ namespace TestingTranslate
 
             return words;
         }
-
-
     }
 }
