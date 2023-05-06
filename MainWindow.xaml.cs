@@ -101,7 +101,7 @@ namespace TestingTranslate
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            var searchTerm = SearchTextBox.Text.Trim();
+            var searchTerm = SearchTextBox.Text.Trim().ToLower(); // Преобразование введенного поискового запроса в нижний регистр
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 MessageBox.Show("Please enter a word to search.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -111,24 +111,35 @@ namespace TestingTranslate
             if (UKR_RB.IsChecked == true)
             {
                 var matchingWords = WordsDictionary.storage
-                    .Where(word => word.ukr.StartsWith(searchTerm, StringComparison.OrdinalIgnoreCase)
-                        || word.Synonyms.Any(synonym => synonym.StartsWith(searchTerm, StringComparison.OrdinalIgnoreCase))
-                        || word.ukr.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
-                        || word.Synonyms.Any(synonym => synonym.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+                    .Where(word => word.ukr.ToLower().StartsWith(searchTerm)
+                        || word.Synonyms.Any(synonym => synonym.ToLower().StartsWith(searchTerm))
+                        || word.eng.ToLower().StartsWith(searchTerm) // Поиск по обычному переводу (английский)
+                        || word.ukr.ToLower().Contains(searchTerm)
+                        || word.Synonyms.Any(synonym => synonym.ToLower().Contains(searchTerm))
+                        || word.eng.ToLower().Contains(searchTerm) // Поиск по обычному переводу (английский)
+                        || word.AlternateEngTranslations.Any(translation => translation.ToLower().StartsWith(searchTerm))
+                        || word.AlternateEngTranslations.Any(translation => translation.ToLower().Contains(searchTerm)))
                     .Select(word => word.ukr);
                 WordsBox.ItemsSource = matchingWords;
             }
             else if (ENG_RB.IsChecked == true)
             {
                 var matchingWords = WordsDictionary.storage
-                    .Where(word => word.eng.StartsWith(searchTerm, StringComparison.OrdinalIgnoreCase)
-                        || word.Homonyms.Any(homonym => homonym.StartsWith(searchTerm, StringComparison.OrdinalIgnoreCase))
-                        || word.eng.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
-                        || word.Homonyms.Any(homonym => homonym.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)))
+                    .Where(word => word.eng.ToLower().StartsWith(searchTerm)
+                        || word.Homonyms.Any(homonym => homonym.ToLower().StartsWith(searchTerm))
+                        || word.ukr.ToLower().StartsWith(searchTerm) // Поиск по обычному переводу (украинский)
+                        || word.eng.ToLower().Contains(searchTerm) // Поиск по обычному переводу (украинский)
+                        || word.Homonyms.Any(homonym => homonym.ToLower().Contains(searchTerm))
+                        || word.ukr.ToLower().Contains(searchTerm)
+                        || word.AlternateUkrTranslations.Any(translation => translation.ToLower().StartsWith(searchTerm))
+                        || word.AlternateUkrTranslations.Any(translation => translation.ToLower().Contains(searchTerm)))
                     .Select(word => word.eng);
                 WordsBox.ItemsSource = matchingWords;
             }
         }
+
+
+
 
 
         private void SortButton_Click(object sender, RoutedEventArgs e)
