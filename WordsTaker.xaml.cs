@@ -80,6 +80,8 @@ namespace TestingTranslate
         {
             UKRWords.SelectedItem = null;
             ENGWords.SelectedItem = null;
+            InputENG.Clear();
+            InputUKR.Clear();
             InputUKRSynonyms.Clear();
             InputENGSynonyms.Clear();
             InputAlternateENG.Clear();
@@ -136,30 +138,46 @@ namespace TestingTranslate
 
 
 
-            private void SearchUKR_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchUKR_TextChanged(object sender, TextChangedEventArgs e)
         {
-            FilterWords(UKRWords, SearchUKR.Text);
+            FilterWords(UKRWords, SearchUKR.Text, true);
         }
 
         private void SearchENG_TextChanged(object sender, TextChangedEventArgs e)
         {
-            FilterWords(ENGWords, SearchENG.Text);
+            FilterWords(ENGWords, SearchENG.Text, false);
         }
-        private void FilterWords(ListBox listBox, string searchText)
+
+        private void FilterWords(ListBox listBox, string searchText, bool isUkrainianSearch)
         {
             if (string.IsNullOrWhiteSpace(searchText))
             {
-                listBox.ItemsSource = WordsDictionary.storage.Select(x => x.ukr);
+                listBox.ItemsSource = isUkrainianSearch
+                    ? WordsDictionary.storage.Select(x => x.ukr)
+                    : WordsDictionary.storage.Select(x => x.eng);
                 return;
             }
 
             var filteredWords = WordsDictionary.storage
-                .Where(x => x.ukr.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                            x.eng.Contains(searchText, StringComparison.OrdinalIgnoreCase))
-                .Select(x => x.ukr)
+                .Where(x => (isUkrainianSearch && (x.ukr.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                                                  x.Synonyms.Any(synonym => synonym.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
+                                                  x.AlternateEngTranslations.Any(translation => translation.Contains(searchText, StringComparison.OrdinalIgnoreCase)))) ||
+                            (!isUkrainianSearch && (x.eng.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
+                                                   x.Homonyms.Any(homonym => homonym.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
+                                                   x.AlternateUkrTranslations.Any(translation => translation.Contains(searchText, StringComparison.OrdinalIgnoreCase)))))
+                .Select(x => isUkrainianSearch ? x.ukr : x.eng)
                 .ToList();
+
             listBox.ItemsSource = filteredWords;
         }
+
+
+
+
+
+
+
+
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {

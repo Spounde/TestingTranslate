@@ -7,9 +7,9 @@ namespace TestingTranslate
 {
     public partial class TestMe : Window
     {
-        private List<Word> testWords; // Список слов для тестирования
-        private int currentQuestionIndex; // Индекс текущего вопроса
-        private int correctAnswerCount; // Количество правильных ответов
+        private List<Word> testWords;
+        private int currentQuestionIndex;
+        private int correctAnswerCount;
 
         public TestMe()
         {
@@ -18,11 +18,17 @@ namespace TestingTranslate
             ShowCurrentQuestion();
             UpdateQuestionCount();
             UpdateAnsweredCount();
+            LanguageTextBlock.DataContext = this; // Устанавливаем контекст данных для LanguageTextBlock
+        }
+
+        public string CurrentLanguage
+        {
+            get { return LanguageTextBlock.Text; }
+            set { LanguageTextBlock.Text = value; }
         }
 
         private void InitializeTest()
         {
-            // Проверяем, есть ли в словаре достаточное количество слов для теста
             if (WordsDictionary.storage.Count < 5)
             {
                 MessageBox.Show("Not enough words in the dictionary to start the test.");
@@ -30,7 +36,6 @@ namespace TestingTranslate
                 return;
             }
 
-            // Получаем случайные слова для теста
             testWords = WordsDictionary.storage.OrderBy(x => Guid.NewGuid()).Take(5).ToList();
             currentQuestionIndex = 0;
             correctAnswerCount = 0;
@@ -43,11 +48,13 @@ namespace TestingTranslate
                 Word currentWord = testWords[currentQuestionIndex];
                 WordsBox.Items.Clear();
                 WordsBox.Items.Add(currentWord.ukr);
+                CurrentLanguage = "Ukrainian"; // Устанавливаем текущий язык в "Ukrainian"
             }
             else
             {
                 WordsBox.Items.Clear();
                 WordsBox.Items.Add("Test is completed.");
+                CurrentLanguage = "Completed"; // Устанавливаем текущий язык в "Completed"
             }
         }
 
@@ -123,8 +130,18 @@ namespace TestingTranslate
             if (currentQuestionIndex >= 0 && currentQuestionIndex < testWords.Count)
             {
                 Word currentWord = testWords[currentQuestionIndex];
-                WordsBox.Items.Clear();
-                WordsBox.Items.Add(currentWord.eng);
+                if (CurrentLanguage == "Ukrainian")
+                {
+                    WordsBox.Items.Clear();
+                    WordsBox.Items.Add(currentWord.eng);
+                    CurrentLanguage = "English"; // Устанавливаем текущий язык в "English"
+                }
+                else if (CurrentLanguage == "English")
+                {
+                    WordsBox.Items.Clear();
+                    WordsBox.Items.Add(currentWord.ukr);
+                    CurrentLanguage = "Ukrainian"; // Устанавливаем текущий язык в "Ukrainian"
+                }
             }
         }
     }

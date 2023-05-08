@@ -144,19 +144,21 @@ namespace TestingTranslate
 
         private void SortButton_Click(object sender, RoutedEventArgs e)
         {
-            CultureInfo ukrainianCulture = new CultureInfo("uk-UA");
-            wordsList.Sort(StringComparer.Create(ukrainianCulture, false));
-
             if (UKR_RB.IsChecked == true)
             {
+                CultureInfo ukrainianCulture = new CultureInfo("uk-UA");
+                wordsList.Sort(StringComparer.Create(ukrainianCulture, false));
                 WordsBox.ItemsSource = wordsList;
             }
             else if (ENG_RB.IsChecked == true)
             {
-                var engWords = wordsList.Select(word => WordsDictionary.storage.First(x => x.ukr.Equals(word, StringComparison.OrdinalIgnoreCase)).eng);
+                var engWords = wordsList
+                    .Select(word => WordsDictionary.storage.First(x => x.ukr.Equals(word, StringComparison.OrdinalIgnoreCase)).eng)
+                    .OrderBy(word => word, StringComparer.OrdinalIgnoreCase);
                 WordsBox.ItemsSource = engWords;
             }
         }
+
 
 
         private void UKR_RB_Checked(object sender, RoutedEventArgs e)
