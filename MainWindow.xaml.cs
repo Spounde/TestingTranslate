@@ -19,7 +19,7 @@ namespace TestingTranslate
 
     public partial class MainWindow : Window
     {
-        private List<string> wordsList; // Список слов для отображения
+        private List<string> wordsList;
 
         public MainWindow()
         {
@@ -32,6 +32,7 @@ namespace TestingTranslate
             Translation.Visibility = Visibility.Collapsed;
             AlternateTranslationsBox.Visibility = Visibility.Collapsed;
             AlternateTranslation.Visibility = Visibility.Collapsed;
+            UKR_RB.IsChecked = true;
         }
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
@@ -55,7 +56,7 @@ namespace TestingTranslate
                 Translation.Visibility = Visibility.Collapsed;
                 AlternateTranslationsBox.Visibility = Visibility.Collapsed;
                 AlternateTranslation.Visibility = Visibility.Collapsed;
-                ClearSelectionButton.Visibility = Visibility.Collapsed; // Скрываем кнопку снятия выделения
+                ClearSelectionButton.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -87,13 +88,13 @@ namespace TestingTranslate
                 Translation.Visibility = Visibility.Visible;
                 AlternateTranslationsBox.Visibility = Visibility.Visible;
                 AlternateTranslation.Visibility = Visibility.Visible;
-                ClearSelectionButton.Visibility = Visibility.Visible; // Показываем кнопку снятия выделения
+                ClearSelectionButton.Visibility = Visibility.Visible; 
             }
         }
 
         private void ClearSelectionButton_Click(object sender, RoutedEventArgs e)
         {
-            WordsBox.SelectedItem = null; // Снимаем выделение
+            WordsBox.SelectedItem = null; 
         }
 
 
@@ -101,7 +102,7 @@ namespace TestingTranslate
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            var searchTerm = SearchTextBox.Text.Trim().ToLower(); // Преобразование введенного поискового запроса в нижний регистр
+            var searchTerm = SearchTextBox.Text.Trim().ToLower(); 
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 MessageBox.Show("Please enter a word to search.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -113,10 +114,10 @@ namespace TestingTranslate
                 var matchingWords = WordsDictionary.storage
                     .Where(word => word.ukr.ToLower().StartsWith(searchTerm)
                         || word.Synonyms.Any(synonym => synonym.ToLower().StartsWith(searchTerm))
-                        || word.eng.ToLower().StartsWith(searchTerm) // Поиск по обычному переводу (английский)
+                        || word.eng.ToLower().StartsWith(searchTerm) 
                         || word.ukr.ToLower().Contains(searchTerm)
                         || word.Synonyms.Any(synonym => synonym.ToLower().Contains(searchTerm))
-                        || word.eng.ToLower().Contains(searchTerm) // Поиск по обычному переводу (английский)
+                        || word.eng.ToLower().Contains(searchTerm) 
                         || word.AlternateEngTranslations.Any(translation => translation.ToLower().StartsWith(searchTerm))
                         || word.AlternateEngTranslations.Any(translation => translation.ToLower().Contains(searchTerm)))
                     .Select(word => word.ukr);
@@ -127,8 +128,8 @@ namespace TestingTranslate
                 var matchingWords = WordsDictionary.storage
                     .Where(word => word.eng.ToLower().StartsWith(searchTerm)
                         || word.Homonyms.Any(homonym => homonym.ToLower().StartsWith(searchTerm))
-                        || word.ukr.ToLower().StartsWith(searchTerm) // Поиск по обычному переводу (украинский)
-                        || word.eng.ToLower().Contains(searchTerm) // Поиск по обычному переводу (украинский)
+                        || word.ukr.ToLower().StartsWith(searchTerm) 
+                        || word.eng.ToLower().Contains(searchTerm) 
                         || word.Homonyms.Any(homonym => homonym.ToLower().Contains(searchTerm))
                         || word.ukr.ToLower().Contains(searchTerm)
                         || word.AlternateUkrTranslations.Any(translation => translation.ToLower().StartsWith(searchTerm))
