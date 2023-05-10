@@ -21,6 +21,7 @@ namespace TestingTranslate
         {
             InitializeComponent();
             ShowWords();
+            
         }
 
 
@@ -37,11 +38,29 @@ namespace TestingTranslate
                     {
                         InputUKR.Text = word.ukr;
                         InputENG.Text = word.eng;
-                        InputUKRSynonyms.Text = string.Join(", ", word.Synonyms);
-                        InputENGSynonyms.Text = string.Join(", ", word.Homonyms);
+                        InputUKRSynonyms.Text = string.Join(", ", word.SynonymsUkr);
+                        InputENGSynonyms.Text = string.Join(", ", word.SynonymsEng);
                         InputAlternateUKR.Text = string.Join(", ", word.AlternateUkrTranslations);
                         InputAlternateENG.Text = string.Join(", ", word.AlternateEngTranslations);
+
+                        InputAlternateUKR.Visibility = Visibility.Visible;
+                        InputAlternateENG.Visibility = Visibility.Visible;
+                        AlternateUKRLabel.Visibility = Visibility.Visible;
+                        AlternateENGLabel.Visibility = Visibility.Visible;
                     }
+                }
+                else
+                {
+                    InputUKR.Clear();
+                    InputENG.Clear();
+                    InputUKRSynonyms.Clear();
+                    InputENGSynonyms.Clear();
+                    InputAlternateUKR.Clear();
+                    InputAlternateENG.Clear();
+                    InputAlternateUKR.Visibility = Visibility.Collapsed;
+                    InputAlternateENG.Visibility = Visibility.Collapsed;
+                    AlternateUKRLabel.Visibility = Visibility.Collapsed;
+                    AlternateENGLabel.Visibility = Visibility.Collapsed;
                 }
             }
             else if (sender == ENGWords)
@@ -54,11 +73,29 @@ namespace TestingTranslate
                     {
                         InputUKR.Text = word.ukr;
                         InputENG.Text = word.eng;
-                        InputUKRSynonyms.Text = string.Join(", ", word.Synonyms);
-                        InputENGSynonyms.Text = string.Join(", ", word.Homonyms);
+                        InputUKRSynonyms.Text = string.Join(", ", word.SynonymsUkr);
+                        InputENGSynonyms.Text = string.Join(", ", word.SynonymsEng);
                         InputAlternateUKR.Text = string.Join(", ", word.AlternateUkrTranslations);
                         InputAlternateENG.Text = string.Join(", ", word.AlternateEngTranslations);
+
+                        InputAlternateUKR.Visibility = Visibility.Visible;
+                        InputAlternateENG.Visibility = Visibility.Visible;
+                        AlternateUKRLabel.Visibility = Visibility.Visible;
+                        AlternateENGLabel.Visibility = Visibility.Visible;
                     }
+                }
+                else
+                {
+                    InputUKR.Clear();
+                    InputENG.Clear();
+                    InputUKRSynonyms.Clear();
+                    InputENGSynonyms.Clear();
+                    InputAlternateUKR.Clear();
+                    InputAlternateENG.Clear();
+                    InputAlternateUKR.Visibility = Visibility.Collapsed;
+                    InputAlternateENG.Visibility = Visibility.Collapsed;
+                    AlternateUKRLabel.Visibility = Visibility.Collapsed;
+                    AlternateENGLabel.Visibility = Visibility.Collapsed;
                 }
             }
 
@@ -76,6 +113,7 @@ namespace TestingTranslate
 
 
 
+
         private void CancelSelectionButton_Click(object sender, RoutedEventArgs e)
         {
             UKRWords.SelectedItem = null;
@@ -88,6 +126,10 @@ namespace TestingTranslate
             InputAlternateUKR.Clear();
             ApplyChangeButton.Visibility = Visibility.Collapsed;
             CancelSelectionButton.Visibility = Visibility.Collapsed;
+            InputAlternateUKR.Visibility = Visibility.Collapsed;
+            InputAlternateENG.Visibility = Visibility.Collapsed;
+            AlternateUKRLabel.Visibility = Visibility.Collapsed;
+            AlternateENGLabel.Visibility = Visibility.Collapsed;
         }
 
         private void UpdateWord_Click(object sender, RoutedEventArgs e)
@@ -118,8 +160,8 @@ namespace TestingTranslate
 
                 wordToUpdate.ukr = ukr;
                 wordToUpdate.eng = eng;
-                wordToUpdate.Synonyms = ukrSynonyms;
-                wordToUpdate.Homonyms = engSynonyms;
+                wordToUpdate.SynonymsUkr = ukrSynonyms;
+                wordToUpdate.SynonymsEng = engSynonyms;
                 wordToUpdate.AlternateUkrTranslations = alternateUkrTranslations;
                 wordToUpdate.AlternateEngTranslations = alternateEngTranslations;
             }
@@ -132,6 +174,7 @@ namespace TestingTranslate
             ApplyChangeButton.Visibility = Visibility.Collapsed;
             CancelSelectionButton.Visibility = Visibility.Collapsed;
         }
+
 
 
 
@@ -160,11 +203,14 @@ namespace TestingTranslate
 
             var filteredWords = WordsDictionary.storage
                 .Where(x => (isUkrainianSearch && (x.ukr.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                                                  x.Synonyms.Any(synonym => synonym.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
+                                                  x.SynonymsUkr.Any(synonym => synonym.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
+                                                  x.AlternateUkrTranslations.Any(translation => translation.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
                                                   x.AlternateEngTranslations.Any(translation => translation.Contains(searchText, StringComparison.OrdinalIgnoreCase)))) ||
                             (!isUkrainianSearch && (x.eng.Contains(searchText, StringComparison.OrdinalIgnoreCase) ||
-                                                   x.Homonyms.Any(homonym => homonym.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
-                                                   x.AlternateUkrTranslations.Any(translation => translation.Contains(searchText, StringComparison.OrdinalIgnoreCase)))))
+                                                   x.SynonymsEng.Any(homonym => homonym.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
+                                                   x.AlternateUkrTranslations.Any(translation => translation.Contains(searchText, StringComparison.OrdinalIgnoreCase)) ||
+                                                   x.AlternateEngTranslations.Any(translation => translation.Contains(searchText, StringComparison.OrdinalIgnoreCase)))))
+
                 .Select(x => isUkrainianSearch ? x.ukr : x.eng)
                 .ToList();
 
@@ -192,6 +238,8 @@ namespace TestingTranslate
             var eng = InputENG.Text.Trim();
             var ukrSynonyms = InputUKRSynonyms.Text.Trim().Split(',').Select(s => s.Trim()).ToList();
             var engSynonyms = InputENGSynonyms.Text.Trim().Split(',').Select(s => s.Trim()).ToList();
+            var alternateUkrTranslations = InputAlternateUKR.Text.Trim().Split(',').Select(s => s.Trim()).ToList();
+            var alternateEngTranslations = InputAlternateENG.Text.Trim().Split(',').Select(s => s.Trim()).ToList();
 
             if (string.IsNullOrWhiteSpace(ukr) || string.IsNullOrWhiteSpace(eng))
             {
@@ -203,15 +251,18 @@ namespace TestingTranslate
             }
             else
             {
-                WordsDictionary.Add(ukr, eng, ukrSynonyms, engSynonyms);
+                WordsDictionary.Add(ukr, eng, ukrSynonyms, engSynonyms, alternateUkrTranslations, alternateEngTranslations);
                 ShowWords();
                 WordsDictionary.SaveData();
                 InputENG.Clear();
                 InputUKR.Clear();
                 InputUKRSynonyms.Clear();
                 InputENGSynonyms.Clear();
+                InputAlternateENG.Clear();
+                InputAlternateUKR.Clear();
             }
         }
+
 
         private void ShowWords()
         {
@@ -226,8 +277,8 @@ namespace TestingTranslate
                 {
                     InputUKR.Text = word.ukr;
                     InputENG.Text = word.eng;
-                    InputUKRSynonyms.Text = string.Join(", ", word.Synonyms);
-                    InputENGSynonyms.Text = string.Join(", ", word.Homonyms);
+                    InputUKRSynonyms.Text = string.Join(", ", word.SynonymsUkr);
+                    InputENGSynonyms.Text = string.Join(", ", word.SynonymsEng);
                 }
             }
             else
@@ -240,8 +291,8 @@ namespace TestingTranslate
                     {
                         InputUKR.Text = word.ukr;
                         InputENG.Text = word.eng;
-                        InputUKRSynonyms.Text = string.Join(", ", word.Synonyms);
-                        InputENGSynonyms.Text = string.Join(", ", word.Homonyms);
+                        InputUKRSynonyms.Text = string.Join(", ", word.SynonymsUkr);
+                        InputENGSynonyms.Text = string.Join(", ", word.SynonymsEng);
                     }
                 }
                 else

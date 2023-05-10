@@ -8,11 +8,11 @@ class Word
 {
     public string ukr { get; set; }
     public string eng { get; set; }
-    public List<string> Synonyms { get; set; }
-    public List<string> Homonyms { get; set; }
-    public List<string> AlternateUkrTranslations { get; set; } 
-    public List<string> AlternateEngTranslations { get; set; } 
-    public Word(string ukr, string eng, List<string> synonyms = null, List<string> homonyms = null)
+    public List<string> SynonymsUkr { get; set; }
+    public List<string> SynonymsEng { get; set; }
+    public List<string> AlternateUkrTranslations { get; set; }
+    public List<string> AlternateEngTranslations { get; set; }
+    public Word(string ukr, string eng, List<string> synonymsUkr = null, List<string> synonymsEng = null)
     {
         if (string.IsNullOrEmpty(ukr))
         {
@@ -26,8 +26,8 @@ class Word
 
         this.ukr = ukr;
         this.eng = eng;
-        this.Synonyms = synonyms ?? new List<string>();
-        this.Homonyms = homonyms ?? new List<string>();
+        this.SynonymsUkr = synonymsUkr ?? new List<string>();
+        this.SynonymsEng = synonymsEng ?? new List<string>();
         this.AlternateUkrTranslations = new List<string>();
         this.AlternateEngTranslations = new List<string>();
     }
@@ -35,9 +35,10 @@ class Word
     public bool IsUnique(List<Word> storage)
     {
         return !storage.Any(x => x.ukr == ukr || x.eng == eng ||
-                                 x.Synonyms.Contains(ukr) || x.Synonyms.Contains(eng) ||
-                                 x.Homonyms.Contains(ukr) || x.Homonyms.Contains(eng) ||
+                                 x.SynonymsUkr.Contains(ukr) || x.SynonymsUkr.Contains(eng) ||
+                                 x.SynonymsEng.Contains(ukr) || x.SynonymsEng.Contains(eng) ||
                                  x.AlternateUkrTranslations.Contains(ukr) || x.AlternateUkrTranslations.Contains(eng) ||
                                  x.AlternateEngTranslations.Contains(ukr) || x.AlternateEngTranslations.Contains(eng));
     }
 }
+

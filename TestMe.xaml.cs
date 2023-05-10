@@ -105,12 +105,35 @@ namespace TestingTranslate
             if (currentQuestionIndex >= 0 && currentQuestionIndex < testWords.Count)
             {
                 Word currentWord = testWords[currentQuestionIndex];
-                bool isCorrect = currentWord.eng.Equals(inputText, StringComparison.OrdinalIgnoreCase);
+                bool isCorrect = false;
 
-                // Проверяем также синонимы на правильность ответа
-                if (!isCorrect)
+                if (CurrentLanguage == "Ukrainian")
                 {
-                    isCorrect = currentWord.Synonyms.Any(synonym => synonym.Equals(inputText, StringComparison.OrdinalIgnoreCase));
+                    isCorrect = currentWord.eng.Equals(inputText, StringComparison.OrdinalIgnoreCase);
+
+                    if (!isCorrect)
+                    {
+                        isCorrect = currentWord.AlternateEngTranslations.Any(translation => translation.Equals(inputText, StringComparison.OrdinalIgnoreCase));
+                    }
+
+                    if (!isCorrect)
+                    {
+                        isCorrect = currentWord.SynonymsEng.Any(synonym => synonym.Equals(inputText, StringComparison.OrdinalIgnoreCase));
+                    }
+                }
+                else if (CurrentLanguage == "English")
+                {
+                    isCorrect = currentWord.ukr.Equals(inputText, StringComparison.OrdinalIgnoreCase);
+
+                    if (!isCorrect)
+                    {
+                        isCorrect = currentWord.AlternateUkrTranslations.Any(translation => translation.Equals(inputText, StringComparison.OrdinalIgnoreCase));
+                    }
+
+                    if (!isCorrect)
+                    {
+                        isCorrect = currentWord.SynonymsUkr.Any(synonym => synonym.Equals(inputText, StringComparison.OrdinalIgnoreCase));
+                    }
                 }
 
                 if (isCorrect)
@@ -124,6 +147,8 @@ namespace TestingTranslate
                 UpdateAnsweredCount();
             }
         }
+
+
 
         private void ToggleLanguageButton_Click(object sender, RoutedEventArgs e)
         {

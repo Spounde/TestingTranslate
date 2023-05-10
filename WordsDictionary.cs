@@ -10,13 +10,16 @@ using System.Windows;
 
 namespace TestingTranslate
 {
-    static class WordsDictionary
-    {
-        public static List<Word> storage = LoadData();
-
-        public static void Add(string ukr, string eng, List<string> synonyms = null, List<string> homonyms = null)
+    
+        static class WordsDictionary
         {
-            var word = new Word(ukr, eng, synonyms, homonyms);
+            public static List<Word> storage = LoadData();
+
+        public static void Add(string ukr, string eng, List<string> synonymsUkr = null, List<string> synonymsEng = null, List<string> alternateUkrTranslations = null, List<string> alternateEngTranslations = null)
+        {
+            var word = new Word(ukr, eng, synonymsUkr, synonymsEng);
+            word.AlternateUkrTranslations = alternateUkrTranslations ?? new List<string>();
+            word.AlternateEngTranslations = alternateEngTranslations ?? new List<string>();
 
             if (!word.IsUnique(storage))
             {
@@ -28,33 +31,36 @@ namespace TestingTranslate
             SaveData();
         }
 
+
         public static void SaveData()
-        {
-            if (storage == null)
             {
-                throw new InvalidOperationException("Storage cannot be null.");
+                if (storage == null)
+                {
+                    throw new InvalidOperationException("Storage cannot be null.");
+                }
+
+                string jsonString = JsonSerializer.Serialize(storage);
+                File.WriteAllText("storage.json", jsonString);
             }
 
-            string jsonString = JsonSerializer.Serialize(storage);
-            File.WriteAllText("storage.json", jsonString);
-        }
-
-        static List<Word> LoadData()
-        {
-            if (!File.Exists("storage.json"))
+            static List<Word> LoadData()
             {
-                return new List<Word>();
+                if (!File.Exists("storage.json"))
+                {
+                    return new List<Word>();
+                }
+
+                string jsonString = File.ReadAllText("storage.json");
+                List<Word> words = JsonSerializer.Deserialize<List<Word>>(jsonString);
+
+                if (words == null)
+                {
+                    throw new InvalidOperationException("Deserialized words list cannot be null.");
+                }
+
+                return words;
             }
-
-            string jsonString = File.ReadAllText("storage.json");
-            List<Word> words = JsonSerializer.Deserialize<List<Word>>(jsonString);
-
-            if (words == null)
-            {
-                throw new InvalidOperationException("Deserialized words list cannot be null.");
-            }
-
-            return words;
         }
     }
-}
+
+

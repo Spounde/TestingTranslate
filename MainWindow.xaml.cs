@@ -65,7 +65,7 @@ namespace TestingTranslate
                     var word = WordsDictionary.storage.FirstOrDefault(x => x.ukr.Equals(selectedWord, StringComparison.OrdinalIgnoreCase));
                     if (word != null)
                     {
-                        SynonymsTextBox.Text = string.Join(", ", word.Synonyms.OrderBy(synonym => synonym));
+                        SynonymsTextBox.Text = string.Join(", ", word.SynonymsUkr.OrderBy(synonym => synonym));
                         TranslationBox.Text = word.eng;
 
                         AlternateTranslationsBox.ItemsSource = word.AlternateEngTranslations;
@@ -76,7 +76,7 @@ namespace TestingTranslate
                     var word = WordsDictionary.storage.FirstOrDefault(x => x.eng.Equals(selectedWord, StringComparison.OrdinalIgnoreCase));
                     if (word != null)
                     {
-                        SynonymsTextBox.Text = string.Join(", ", word.Homonyms);
+                        SynonymsTextBox.Text = string.Join(", ", word.SynonymsEng);
                         TranslationBox.Text = word.ukr;
 
                         AlternateTranslationsBox.ItemsSource = word.AlternateUkrTranslations;
@@ -113,10 +113,10 @@ namespace TestingTranslate
             {
                 var matchingWords = WordsDictionary.storage
                     .Where(word => word.ukr.ToLower().StartsWith(searchTerm)
-                        || word.Synonyms.Any(synonym => synonym.ToLower().StartsWith(searchTerm))
+                        || word.SynonymsUkr.Any(synonym => synonym.ToLower().StartsWith(searchTerm))
                         || word.eng.ToLower().StartsWith(searchTerm) 
                         || word.ukr.ToLower().Contains(searchTerm)
-                        || word.Synonyms.Any(synonym => synonym.ToLower().Contains(searchTerm))
+                        || word.SynonymsUkr.Any(synonym => synonym.ToLower().Contains(searchTerm))
                         || word.eng.ToLower().Contains(searchTerm) 
                         || word.AlternateEngTranslations.Any(translation => translation.ToLower().StartsWith(searchTerm))
                         || word.AlternateEngTranslations.Any(translation => translation.ToLower().Contains(searchTerm)))
@@ -127,10 +127,10 @@ namespace TestingTranslate
             {
                 var matchingWords = WordsDictionary.storage
                     .Where(word => word.eng.ToLower().StartsWith(searchTerm)
-                        || word.Homonyms.Any(homonym => homonym.ToLower().StartsWith(searchTerm))
+                        || word.SynonymsEng.Any(homonym => homonym.ToLower().StartsWith(searchTerm))
                         || word.ukr.ToLower().StartsWith(searchTerm) 
                         || word.eng.ToLower().Contains(searchTerm) 
-                        || word.Homonyms.Any(homonym => homonym.ToLower().Contains(searchTerm))
+                        || word.SynonymsEng.Any(homonym => homonym.ToLower().Contains(searchTerm))
                         || word.ukr.ToLower().Contains(searchTerm)
                         || word.AlternateUkrTranslations.Any(translation => translation.ToLower().StartsWith(searchTerm))
                         || word.AlternateUkrTranslations.Any(translation => translation.ToLower().Contains(searchTerm)))

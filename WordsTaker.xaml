@@ -43,10 +43,11 @@
         <TextBox x:Name="SearchUKR" TextChanged="SearchUKR_TextChanged" Margin="83,86,871,474"/>
         <TextBox x:Name="SearchENG" TextChanged="SearchENG_TextChanged" Margin="813,86,141,474"/>
         <TextBlock Text="Search English:" Margin="827,58,141,514"/>
-        <TextBox x:Name="InputAlternateUKR" HorizontalAlignment="Left" Height="24" Margin="34,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162"/>
-        <TextBox x:Name="InputAlternateENG" HorizontalAlignment="Left" Height="24" Margin="813,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164"/>
-        <TextBlock TextWrapping="Wrap" Text="UKR Alternate Translate" Margin="68,306,848,259" />
-        <TextBlock TextWrapping="Wrap" Text="ENG Alternate Translate" Margin="831,306,90,259" />
+        <Label x:Name="AlternateUKRLabel" Content="Alternate Ukrainian Translations:" Margin="813,290,58,259" Visibility="Collapsed" />
+        <TextBox x:Name="InputAlternateUKR" HorizontalAlignment="Left" Height="24" Margin="34,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Visibility="Collapsed"/>
+        <Label x:Name="AlternateENGLabel" Content="Alternate English Translations:" Margin="34,290,862,259" Visibility="Collapsed" />
+        <TextBox x:Name="InputAlternateENG" HorizontalAlignment="Left" Height="24" Margin="813,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="164" Visibility="Collapsed"/>
+
 
 
 
